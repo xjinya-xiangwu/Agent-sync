@@ -1,0 +1,4 @@
+interface:
+  display_name: "UE Editor Operations"
+  short_description: "Route actor, asset, and material edits via UE MCP"
+  default_prompt: "Use the official Unreal MCP to discover, plan, execute, and verify this exact actor, asset, or material operation."

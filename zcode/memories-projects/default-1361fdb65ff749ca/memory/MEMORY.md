@@ -1,0 +1,12 @@
+- [User profile](user-profile.md) — 中文交流，理性审慎，递进式信息收集
+- [Kurt professional background](kurt-professional-background.md) — 徐劲亚职业履历（AI实验室/伏羲/蚂蚁/CBNData）与可售卖资产排序
+- [Digital product business](digital-product-business.md) — 一人+Agent 数字产品副业：产品矩阵（AI PM 文档线/政企 AI 文档包/金融营销案例包）与验证纪律
+- [RMC-6236 research](rmc-6236-research.md) — 靶向药可及性调研主线（临床试验/保险/原料药/基因检测）
+- [China clinical trial registries](china-clinical-trial-registries.md) — NMPA 与 ChiCTR 两个官方临床试验平台网址
+- [Literary-philosophy preference](literary-philosophy-preference.md) — 文学-哲学交叉分析偏好，海德格尔 × 钱德勒《漫长的告别》
+- [Win cmd shell quirks](win-cmd-shell-quirks.md) — 本机 shell 是 cmd；git 已装 (2.55.0.3，老 shell 需用全路径)；用 curl+tar+robocopy+winget node
+- [ZCode plugin install layout](zcode-plugin-install-layout.md) — 插件手动安装的目录与三个配置文件位置
+- [Lark CLI profiles](lark-cli-profiles.md) — 双 profile：shanghai-ai（徐劲亚）/ xiangwu（kurt，测"独立游戏"知识库）
+- [GitHub account auth](github-account-auth.md) — gh CLI 2.101.0 已认证为 xjinya-xiangwu；AI-Range-Demo / AI-Native-Cyber-Range 可写
+- [ZCode performance tuning](zcode-performance-tuning.md) — 360 是实际杀软(Defender 停用)；66 个商业 skill 已归档 E:\Zcode\skills-archive；遗留 hooks/MCP 优化项
+- [Boyue 中转与 mimo 坑](new-provider-relay-mimo.md) — new-provider(Boyue) 配置在 v2/provider_config.json；mimo-v2.6-pro max_tokens 上限 131072，超了 400 "Param Incorrect"

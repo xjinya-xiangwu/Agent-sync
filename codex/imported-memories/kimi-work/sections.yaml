@@ -1,0 +1,14 @@
+inject_char_cap: 6000
+sections:
+  - path: sections/personal_context.md
+    title: Personal Context
+  - path: sections/work_context.md
+    title: Work Context
+  - path: sections/this_month.md
+    title: This Month
+  - path: sections/earlier_months.md
+    title: Earlier Months
+  - path: sections/taste.md
+    title: Taste & Preferences
+  - path: sections/memory_tips.md
+    title: Memory Tips

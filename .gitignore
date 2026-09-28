@@ -1,0 +1,13 @@
+# secrets & runtime noise — never commit
+credentials.env
+*.log
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+node_modules/
+__pycache__/
+.DS_Store
+Thumbs.db
+nul
+debug.log
+*.backup-*

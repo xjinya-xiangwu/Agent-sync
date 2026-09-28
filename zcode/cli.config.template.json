@@ -1,0 +1,233 @@
+{
+ "plugins": {
+  "enabledPlugins": {
+   "computer-use@zcode-plugins-official": true,
+   "lark-cli@zcode-plugins-official": true,
+   "github@zcode-plugins-official": true,
+   "notion@claude-plugins-official": true,
+   "i-have-adhd@i-have-adhd": true,
+   "wind@zcode-plugins-official": true,
+   "hexin@zcode-plugins-official": true
+  }
+ },
+ "mcp": {
+  "servers": {
+   "node_repl": {
+    "type": "stdio",
+    "command": "C:\\Users\\xujinya\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\57937f104cca4dc5\\bin\\node_repl.exe",
+    "env": {
+     "BROWSER_USE_AVAILABLE_BACKENDS": "chrome,iab",
+     "BROWSER_USE_CODEX_APP_BUILD_FLAVOR": "prod",
+     "BROWSER_USE_CODEX_APP_VERSION": "26.820.71523",
+     "BROWSER_USE_TINYSKY_ENABLED": "0",
+     "CODEX_CLI_PATH": "C:\\Users\\xujinya\\AppData\\Local\\OpenAI\\Codex\\bin\\d5f4c71927a04589\\codex.exe",
+     "CODEX_HOME": "C:\\Users\\xujinya\\.codex",
+     "NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER": "Control the in-app browser in conjunction with the Browser Plugin.",
+     "NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME": "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative.",
+     "NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS": "1000",
+     "NODE_REPL_NODE_MODULE_DIRS": "C:\\Users\\xujinya\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\57937f104cca4dc5\\bin\\node_modules",
+     "NODE_REPL_NODE_PATH": "C:\\Users\\xujinya\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\57937f104cca4dc5\\bin\\node.exe",
+     "NODE_REPL_TRUSTED_CODE_PATHS": "C:\\Users\\xujinya\\.codex;C:\\Users\\xujinya\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\57937f104cca4dc5\\bin\\node_modules",
+     "NODE_REPL_TRUSTED_SERVICES": "{\"browser\":\"C:/Users/xujinya/.codex/plugins/cache/openai-bundled/browser/26.820.71523/scripts/browser-service.mjs\",\"sky\":\"@oai/sky/service\"}",
+     "SKY_CUA_NATIVE_PIPE": "1",
+     "SKY_CUA_NATIVE_PIPE_DIRECTORY": "\\\\.\\pipe\\codex-computer-use-9188eadf-9794-497e-b695-0444eb3abdb9"
+    }
+   },
+   "lark-mcp": {
+    "command": "C:\\Windows\\System32\\cmd.exe",
+    "args": [
+     "/d",
+     "/s",
+     "/c",
+     "C:\\Users\\xujinya\\.codex\\mcp-servers\\lark-mcp\\start-lark-mcp.cmd"
+    ]
+   },
+   "microsoft-office": {
+    "command": "cmd.exe",
+    "args": [
+     "/d",
+     "/s",
+     "/c",
+     "C:\\Users\\xujinya\\.codex\\mcp-servers\\microsoft-semanticworkbench\\mcp-servers\\mcp-server-office\\start-office-mcp.cmd"
+    ],
+    "enabled": false
+   },
+   "github": {
+    "type": "http",
+    "url": "https://api.githubcopilot.com/mcp/",
+    "headers": {
+     "Authorization": "Bearer ${GITHUB_MCP_PAT}"
+    },
+    "enabled": false
+   },
+   "ai-memory": {
+    "type": "http",
+    "url": "http://127.0.0.1:49374/mcp",
+    "enabled": false
+   },
+   "huggingface": {
+    "type": "http",
+    "url": "https://huggingface.co/mcp",
+    "timeoutMs": 60000
+   },
+   "baidu-pan": {
+    "type": "sse",
+    "url": "https://mcp-pan.baidu.com/sse",
+    "headers": {
+     "Authorization": "Bearer ${BAIDU_PAN_MCP_TOKEN}_nIqKjdoW3J6Dyl9C8.KDd6KQ"
+    },
+    "enabled": true
+   }
+  }
+ },
+ "hooks": {
+  "enabled": true,
+  "maxOutputBytes": 65536,
+  "events": {
+   "SessionStart": [
+    {
+     "hooks": [
+      {
+       "type": "process",
+       "command": "C:\\Users\\xujinya\\AppData\\Local\\ai-memory\\ai-memory.exe",
+       "args": [
+        "--data-dir",
+        "\\\\?\\C:\\Users\\xujinya\\AppData\\Local\\ai-memory",
+        "hook",
+        "--event",
+        "session-start",
+        "--agent",
+        "zcode",
+        "--server-url",
+        "http://127.0.0.1:49374"
+       ],
+       "enabled": true,
+       "timeoutMs": 10000,
+       "statusMessage": "ai-memory capture"
+      }
+     ]
+    }
+   ],
+   "UserPromptSubmit": [
+    {
+     "hooks": [
+      {
+       "type": "process",
+       "command": "C:\\Users\\xujinya\\AppData\\Local\\ai-memory\\ai-memory.exe",
+       "args": [
+        "--data-dir",
+        "\\\\?\\C:\\Users\\xujinya\\AppData\\Local\\ai-memory",
+        "hook",
+        "--event",
+        "user-prompt-submit",
+        "--agent",
+        "zcode",
+        "--server-url",
+        "http://127.0.0.1:49374"
+       ],
+       "enabled": true,
+       "timeoutMs": 10000,
+       "statusMessage": "ai-memory capture"
+      }
+     ]
+    }
+   ],
+   "PreToolUse": [
+    {
+     "hooks": [
+      {
+       "type": "process",
+       "command": "C:\\Users\\xujinya\\AppData\\Local\\ai-memory\\ai-memory.exe",
+       "args": [
+        "--data-dir",
+        "\\\\?\\C:\\Users\\xujinya\\AppData\\Local\\ai-memory",
+        "hook",
+        "--event",
+        "pre-tool-use",
+        "--agent",
+        "zcode",
+        "--server-url",
+        "http://127.0.0.1:49374"
+       ],
+       "enabled": true,
+       "timeoutMs": 10000,
+       "statusMessage": "ai-memory capture"
+      }
+     ]
+    }
+   ],
+   "PostToolUse": [
+    {
+     "hooks": [
+      {
+       "type": "process",
+       "command": "C:\\Users\\xujinya\\AppData\\Local\\ai-memory\\ai-memory.exe",
+       "args": [
+        "--data-dir",
+        "\\\\?\\C:\\Users\\xujinya\\AppData\\Local\\ai-memory",
+        "hook",
+        "--event",
+        "post-tool-use",
+        "--agent",
+        "zcode",
+        "--server-url",
+        "http://127.0.0.1:49374"
+       ],
+       "enabled": true,
+       "timeoutMs": 10000,
+       "statusMessage": "ai-memory capture"
+      }
+     ]
+    }
+   ],
+   "PostToolUseFailure": [
+    {
+     "hooks": [
+      {
+       "type": "process",
+       "command": "C:\\Users\\xujinya\\AppData\\Local\\ai-memory\\ai-memory.exe",
+       "args": [
+        "--data-dir",
+        "\\\\?\\C:\\Users\\xujinya\\AppData\\Local\\ai-memory",
+        "hook",
+        "--event",
+        "post-tool-use",
+        "--agent",
+        "zcode",
+        "--server-url",
+        "http://127.0.0.1:49374"
+       ],
+       "enabled": true,
+       "timeoutMs": 10000,
+       "statusMessage": "ai-memory capture"
+      }
+     ]
+    }
+   ],
+   "Stop": [
+    {
+     "hooks": [
+      {
+       "type": "process",
+       "command": "C:\\Users\\xujinya\\AppData\\Local\\ai-memory\\ai-memory.exe",
+       "args": [
+        "--data-dir",
+        "\\\\?\\C:\\Users\\xujinya\\AppData\\Local\\ai-memory",
+        "hook",
+        "--event",
+        "stop",
+        "--agent",
+        "zcode",
+        "--server-url",
+        "http://127.0.0.1:49374"
+       ],
+       "enabled": true,
+       "timeoutMs": 10000,
+       "statusMessage": "ai-memory capture"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

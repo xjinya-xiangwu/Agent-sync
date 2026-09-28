@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blender Production Recipes"
+  short_description: "Validated import, transform, layout, and PBR recipes"
+  default_prompt: "Use Blender production recipes to plan and safely execute this exact scene or asset edit through the official Blender MCP."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Email"
+  short_description: "通过 IMAP/SMTP 绑定邮箱地址和授权码，管理邮件"
+  default_prompt: "使用 $email-imap-onboarding 帮我绑定邮箱地址和授权码，找到授权码入口，并通过 IMAP/SMTP 管理邮件。"
