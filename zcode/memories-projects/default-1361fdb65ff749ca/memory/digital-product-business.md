@@ -41,6 +41,10 @@ registry 托管 = "每周一键更新"承诺的物理载体，asp update 可用�
 
 Notion「个人知识库」下建「🚀 AI冷启动」目录（page 3e962c74-ab72-815b-9fe7-f963fa70e7b2）：01 项目背景与市场分析 / 02 产品方案 v1.2（主文档）/ 03 家族B-政企AI项目文档包 + 待决策 checklist（可勾选）。方案迭代后需同步更新 Notion 版本。
 
-## 待用户决策的开放点（冷启动包）
+## 决策与进度（2026-09-28 六项决策落定 + W1 基建完成）
 
-托管方案（OSS 主源+实名 vs 免费托管）、未检测到任何 agent 时只给引导面板（建议）vs 帮装开源 agent、MCP 零 key 原则、正式价 29.9/早鸟 19.9、全家桶 59.9 做不做、lite 版放 GitHub vs 网盘、同事.skill 导流口径（建议只推免费 lite）、商品页是否挂专业身份、DSH/Kimi 项目链接待用户提供或授权调研。用户已明确"先从家族 A 入手"，家族 B/金融营销包顺延。
+六项已决：托管 OSS 主源+GH Pages 备源；MCP 零 key 原则（key/OAuth 类注释态+注册引导，不代办不收 key）；无 agent 用引导面板；定价 29.9/早鸟 19.9/续更 9.9 季/全家桶 59.9 做；lite 上 GitHub；DSH/Kimi 授权自行调研。**遗留唯一决策：商品页专业身份口径（W3 前定）**。
+
+DSH 调研回填：`~/.dsh/`（$DSH_HOME 官方确认）、AGENTS.md 原生支持、MCP 默认不启用（沙箱设计）→ 适配器用 template-only 策略。Kimi 形态 = KimiWork + Kimi CLI（支持 MCP），路径 W2 实测。
+
+**W1 基建完成**：开发仓库 `C:\Users\xujinya\.zcode\workspace\default\ai-coldstart\`——asp.ps1/asp.sh（install/update/detect/agents/status）、3 适配器（claude-code/zcode/dsh）、registry/index.json 协议 v0.1、双击入口。沙箱实测全过：探测、skills 部署、AGENTS.md managed-section 幂等（`<!-- asp:begin/end -->` 标记）、MCP merge 仅新增不覆盖、备份回滚。Zcode 实证：skills=`~/.zcode/skills/`、MCP=`~/.zcode/cli/config.json` 的 `mcp.servers` 键。**开发坑**：①asp.ps1 必须带 UTF-8 BOM（PS5.1 无 BOM 按 ANSI 解析中文会语法错误）；②写用户 JSON 配置必须无 BOM（[IO.File]::WriteAllText + UTF8Encoding($false)）；③Git Bash /tmp 与 PS 解析不一致，跨 shell 用 Windows 绝对路径。W2 待办：PM 包 6 skills 生产、Codex/Cursor/opencode/Kimi 适配器实测、mac 侧 asp.sh 实测、OSS 开通填 mirrors、发版脚本。

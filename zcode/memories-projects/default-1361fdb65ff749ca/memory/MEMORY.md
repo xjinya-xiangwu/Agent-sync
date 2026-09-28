@@ -10,3 +10,7 @@
 - [GitHub account auth](github-account-auth.md) — gh CLI 2.101.0 已认证为 xjinya-xiangwu；AI-Range-Demo / AI-Native-Cyber-Range 可写
 - [ZCode performance tuning](zcode-performance-tuning.md) — 360 是实际杀软(Defender 停用)；66 个商业 skill 已归档 E:\Zcode\skills-archive；遗留 hooks/MCP 优化项
 - [Boyue 中转与 mimo 坑](new-provider-relay-mimo.md) — new-provider(Boyue) 配置在 v2/provider_config.json；mimo-v2.6-pro max_tokens 上限 131072，超了 400 "Param Incorrect"
+- [Agent skills CLI](agent-skills-cli.md) — npx skills 认识 ZCode（-g -a zcode 装到 ~/.zcode/skills）；guizang-ppt-skill 只出网页 HTML，正式 PPT 要走 pptx 技能出 .pptx
+- [PPTX toolchain](pptx-toolchain.md) — LibreOffice 26.8.0 已装(PATH 已注册)+soffice 直转 PNG 命令；pptxgenjs/python-pptx 可用；富文本混排需修 a:pPr
+- [Win shell quirks](win-cmd-shell-quirks.md) — shell 历史变迁：老会话 cmd.exe（node -e 失效等坑），2026-09-28 起为 Git Bash；git/winget node 已装
+- [Agent-sync 仓库](agent-sync-repo.md) — ZCode/Codex 跨端同步私有仓库 (gh:xjinya-xiangwu/Agent-sync，本机 ~/Agent-sync)；skills 已 junction 化；sync.ps1 pull|push

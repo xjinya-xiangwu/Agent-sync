@@ -1,7 +1,19 @@
-# 家族 A：AI 冷启动包 — 执行方案 v1.2
+# 家族 A：AI 冷启动包 — 执行方案 v1.3
 
 > 定位一句话：≤30 元买断"AI 工具从零到能干活"——自动识别你机器上的 agent，一键装好精选 skills + 通用 agents.md + 常用 MCP 配置 + prompts，每周自动更新。
-> v1.2 变更：①纳入 MCP 工作环境配置；②补 DeepSeek Harness 适配器；③安装升级为"无视环境、零用户操作"（离线快照 + 双击运行）；④新增用户旅程与产品交互链路专节；⑤新增托管选型专节。
+> v1.3 变更（2026-09-28 六项决策落定）：①托管确认 OSS 主源 + GitHub Pages 备源；②MCP 零 key 原则确认 + OAuth/注册引导细化；③未检测到 agent 用引导面板；④定价确认（29.9/19.9/9.9 季/全家桶 59.9 做）；⑤lite 版上 GitHub；⑥DSH 调研回填（Kimi 部分回填，具体路径留 W2 实测）。W1 基建已启动。
+
+## 决策记录（2026-09-28）
+
+| 决策项 | 结论 |
+|---|---|
+| 托管 | OSS+CDN 主源 + GitHub Pages 备源，asp 双源 failover（用户已确认） |
+| MCP 原则 | 零 key 默认启用；key/OAuth 类注释态 + **引导用户自行注册/授权**（README 一页式引导：去哪注册、哪个字段填哪） |
+| 无 agent 环境 | 引导面板（各 agent 官网链接 + 重跑提示），不替装 |
+| 定价 | 29.9 含 3 个月周更；早鸟 19.9；续更 9.9/季；**全家桶 59.9 做** |
+| lite 版 | GitHub（star 资产累积，复刻者拿不走更新） |
+| DSH/Kimi | 已自行调研（见 §1.2 回填）；Kimi 配置目录待 W2 实测 |
+| 商品页身份口径 | **未决**（W3 上架前必须定） |
 
 ---
 
@@ -49,8 +61,8 @@
 | Codex | `~/.codex/` | 待实测 | `~/.codex/AGENTS.md` | config（toml）待实测 | W2 实测 |
 | Cursor | `~/.cursor/` | 规则目录/兼容开关 | `.cursor/rules/*.mdc` | `~/.cursor/mcp.json` | W2 实测 |
 | opencode | `~/.config/opencode/` | opencode skills 目录待实测 | 原生 AGENTS.md | opencode.json mcp 字段 | W2 实测 |
-| Kimi (Kimiwork) | 待确认 | 待确认 | 待确认 | 待确认 | W2 调研实测 |
-| DeepSeek Harness (DSH) | 待实测（~/.dsh/ 或 ~/.deepseek/） | 待实测 | AGENTS.md 待确认 | 待实测 | **W2 优先实测** |
+| Kimi (Kimiwork) | `~/.kimi/`（待实测确认） | 待实测 | AGENTS.md 待确认 | Kimi CLI 支持 MCP（官方确认），配置格式待实测 | W2 实测（形态已明：KimiWork agent 产品 + Kimi CLI 编码助手） |
+| DeepSeek Harness (DSH) | `~/.dsh/`（**官方确认** `$DSH_HOME` 默认值） | `.dsh/skills/`（第三方信息，全局 vs 项目级 W2 实测） | **AGENTS.md 原生支持**（官方确认，workspace 根；CLAUDE.md 亦读） | patch 机制（`~/.dsh/cordis.patch.yml`）；**MCP 默认不启用**（沙箱安全设计）→ 只提供模板+启用引导，不自动写入 | 2026-09-28 官方文档调研回填；仓库 deepseek-ai/deepseek-harness |
 
 > 兼容性保障机制：适配器矩阵本身作为"支持列表"每周更新并展示在商品页；每个 agent 的每次发版都在真实环境冒烟测试（W2 起建立 8 个 agent 的测试环境清单），未通过测试的 agent 在该版本自动降级为"仅 AGENTS.md 模式"而不是装一半失败。
 
@@ -58,9 +70,10 @@
 
 每个角色包含 `mcp/` 目录：该角色的推荐 MCP 清单 + 各 agent 格式的配置片段模板。
 
-**零 key 原则（默认启用 vs 模板注释）**：
+**零 key 原则（默认启用 vs 模板注释 + 引导）**：
 - 默认启用：零 API key、本地可跑的 MCP（context7 文档查询、sequential-thinking、memory、filesystem/git/sqlite 等）——保证"装完即能跑，零配置零报错"。
-- 模板注释：需要 key 的（搜索类、图片类）写进配置模板但保持注释状态 + README 一页"如何填 key 启用"——是升级钩子，不是安装障碍。
+- 引导启用（2026-09-28 决策细化）：需要 key/OAuth 的（搜索类、图片类）写进配置模板但保持注释状态；README 提供**一页式注册引导**——去哪注册、免费额度多少、拿到 key 后填在配置文件第几行、改完重启生效。引导用户自行完成注册/授权，我们不代办、不收 key。
+- DSH 特例：其 MCP 默认不启用（安全设计），适配器只提供 cordis.patch.yml 片段模板 + 启用步骤说明。
 
 **分角色 MCP 清单（v1 草案）**：
 - AI 产品经理包：context7、sequential-thinking、memory、filesystem
@@ -205,11 +218,8 @@
 
 ---
 
-## 10. 待决策的开放问题（v1.2 更新）
+## 10. 决策状态（v1.3：六项已决，一项遗留）
 
-1. 托管方案确认：OSS 主源 + GitHub Pages 备源（月成本 5–20 元，需个人实名）——是否接受？
-2. MCP 默认清单按"零 key 原则"执行（key 类注释态）——是否认可？
-3. 未检测到任何 agent 时的策略：引导面板（推荐）vs 尝试帮装一个开源 agent（如 opencode）？我建议前者（安全与责任边界）。
-4. DeepSeek Harness 的安装包/文档链接请提供（或授权我 W2 自行调研实测），Kimi 同。
-5. 定价确认：29.9 含 3 个月周更 + 续更 9.9/季；全家桶 59.9 做不做？
-6. lite 版放 GitHub 还是网盘？商品页专业身份口径？
+已决（见开头决策记录表）：托管（OSS+备源）、MCP 零 key+引导、引导面板、定价（含全家桶做）、lite 上 GitHub、DSH/Kimi 授权调研（DSH 已回填）。
+
+**遗留**：商品页专业身份口径（真名背书 vs 匿名品牌）——W3 上架前必须定。Kimi/Codex/Cursor/opencode 的具体路径 W2 实测。
