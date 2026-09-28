@@ -1,0 +1,6 @@
+---
+description: Agent-sync 跨 agent 环境同步仓库的引导规则
+alwaysApply: true
+---
+
+请先阅读仓库根目录的 AGENTS.md 并遵循其中的全部规则：仓库用途（跨 agent 工作环境同步）、部署顺序（install.ps1 → 填密钥占位符 → 按 mcp/FORMATS.md 生成 MCP 配置 → 重装本地 MCP server）、硬性规则（密钥永不入库、memory 只增不覆盖、操作幂等）。

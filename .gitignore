@@ -1,5 +1,6 @@
 # secrets & runtime noise — never commit
 credentials.env
+mcp/generated/
 *.log
 *.sqlite
 *.sqlite-shm

@@ -1,0 +1,47 @@
+{
+  "$schema-note": "Canonical cross-agent MCP registry. Single source of truth; per-agent native configs are generated from this by setup-mcp.ps1 / setup-mcp.sh, or by any agent following mcp/FORMATS.md. Placeholders: ${HOME} = user home on target machine. Tokens: ${GITHUB_MCP_PAT}, ${BAIDU_PAN_MCP_TOKEN} must be filled locally, NEVER committed.",
+  "servers": {
+    "lark-mcp": {
+      "transport": "stdio",
+      "command": "cmd.exe",
+      "args": ["/d", "/s", "/c", "${HOME}\\.codex\\mcp-servers\\lark-mcp\\start-lark-mcp.cmd"],
+      "platforms": ["windows"],
+      "setup": "codex/mcp-servers-setup/README.md",
+      "notes": "Feishu/Lark MCP. Requires lark-mcp installed + credentials.env next to the start script."
+    },
+    "huggingface": {
+      "transport": "http",
+      "url": "https://huggingface.co/mcp",
+      "timeoutMs": 60000,
+      "notes": "Official HF MCP endpoint, no auth needed for read-only."
+    },
+    "baidu-pan": {
+      "transport": "sse",
+      "url": "https://mcp-pan.baidu.com/sse",
+      "headers": { "Authorization": "Bearer ${BAIDU_PAN_MCP_TOKEN}" },
+      "notes": "Baidu Netdisk MCP. Token from Baidu Pan MCP console."
+    },
+    "github": {
+      "transport": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": { "Authorization": "Bearer ${GITHUB_MCP_PAT}" },
+      "optional": true,
+      "notes": "GitHub Copilot MCP. Disabled by default on source machine - gh CLI is preferred there. Enable per agent as needed."
+    },
+    "ai-memory": {
+      "transport": "http",
+      "url": "http://127.0.0.1:49374/mcp",
+      "optional": true,
+      "notes": "Local ai-memory service (also wired via hooks on ZCode/Codex). Only works where ai-memory.exe is installed."
+    },
+    "microsoft-office": {
+      "transport": "stdio",
+      "command": "cmd.exe",
+      "args": ["/d", "/s", "/c", "${HOME}\\.codex\\mcp-servers\\microsoft-semanticworkbench\\mcp-servers\\mcp-server-office\\start-office-mcp.cmd"],
+      "platforms": ["windows"],
+      "optional": true,
+      "setup": "codex/mcp-servers-setup/README.md",
+      "notes": "Office MCP from microsoft/semanticworkbench. Requires uv."
+    }
+  }
+}

@@ -13,28 +13,41 @@ function Backup-IfExists($path) {
 
 Write-Host "== Agent-sync install from $Repo =="
 
-# 1) ZCode skills -> junction (edits go straight into the repo checkout)
+# 1) Skills -> junction to repo checkout, for every agent that supports the SKILL.md standard
 $skillsSrc = Join-Path $Repo 'zcode\skills'
-$skillsDst = Join-Path $Home2 '.zcode\skills'
-New-Item -ItemType Directory -Force -Path (Split-Path $skillsDst) | Out-Null
-$item = Get-Item $skillsDst -ErrorAction SilentlyContinue
-if ($item -and $item.LinkType -eq 'Junction' -and $item.Target -eq $skillsSrc) {
-    Write-Host "skills junction already OK"
-} else {
-    Backup-IfExists $skillsDst
-    New-Item -ItemType Junction -Path $skillsDst -Target $skillsSrc | Out-Null
-    Write-Host "skills junction created (old dir backed up if any)"
+foreach ($dst in @(
+    (Join-Path $Home2 '.zcode\skills'),      # ZCode
+    (Join-Path $Home2 '.codex\skills'),      # Codex
+    (Join-Path $Home2 '.claude\skills'),     # Claude Code
+    (Join-Path $Home2 '.cursor\skills')      # Cursor
+)) {
+    New-Item -ItemType Directory -Force -Path (Split-Path $dst) | Out-Null
+    $item = Get-Item $dst -ErrorAction SilentlyContinue
+    if ($item -and $item.LinkType -eq 'Junction' -and $item.Target -eq $skillsSrc) {
+        Write-Host "skills junction already OK: $dst"
+    } else {
+        Backup-IfExists $dst
+        New-Item -ItemType Junction -Path $dst -Target $skillsSrc | Out-Null
+        Write-Host "skills junction created: $dst"
+    }
 }
 
-# 2) Unified AGENTS.md -> ~/.codex/AGENTS.md
-$agentsDst = Join-Path $Home2 '.codex\AGENTS.md'
-New-Item -ItemType Directory -Force -Path (Split-Path $agentsDst) | Out-Null
+# 2) Unified global instructions -> each agent's global memory/instruction file
 $agentsSrc = Join-Path $Repo 'global\AGENTS.md'
-if ((Test-Path $agentsDst) -and ((Get-FileHash $agentsDst).Hash -ne (Get-FileHash $agentsSrc).Hash)) {
-    Backup-IfExists $agentsDst
+foreach ($pair in @(
+    @('.codex\AGENTS.md', 'Codex'),
+    @('.claude\CLAUDE.md', 'Claude Code'),
+    @('.gemini\GEMINI.md', 'Gemini CLI'),
+    @('.config\opencode\AGENTS.md', 'OpenCode')
+)) {
+    $dst = Join-Path $Home2 $pair[0]
+    New-Item -ItemType Directory -Force -Path (Split-Path $dst) | Out-Null
+    if ((Test-Path $dst) -and ((Get-FileHash $dst).Hash -ne (Get-FileHash $agentsSrc).Hash)) {
+        Backup-IfExists $dst
+    }
+    Copy-Item $agentsSrc $dst -Force
+    Write-Host "global instructions deployed to $($pair[1]) ($($pair[0]))"
 }
-Copy-Item $agentsSrc $agentsDst -Force
-Write-Host "AGENTS.md deployed to ~/.codex"
 
 # 3) ZCode memories: copy only missing project keys (never overwrite local-newer)
 $memSrc = Join-Path $Repo 'zcode\memories-projects'
@@ -81,5 +94,6 @@ Write-Host @"
     (replace `$GITHUB_MCP_PAT / `$BAIDU_PAN_MCP_TOKEN with real values)
  2. codex\config.toml.template -> ~\.codex\config.toml
     (replace `$CODEX_BEARER_TOKEN with real value)
- 3. Local MCP servers: see codex\mcp-servers-setup\README.md
+ 3. MCP for other agents: .\setup-mcp.ps1 -Targets cursor,vscode,opencode,claude
+ 4. Local MCP servers: see codex\mcp-servers-setup\README.md
 "@

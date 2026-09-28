@@ -6,23 +6,27 @@ ts=$(date +%Y%m%d-%H%M%S)
 
 echo "== Agent-sync install from $REPO =="
 
-# 1) ZCode skills -> symlink
-skills_src="$REPO/zcode/skills"; skills_dst="$HOME/.zcode/skills"
-mkdir -p "$(dirname "$skills_dst")"
-if [ -L "$skills_dst" ] && [ "$(readlink "$skills_dst")" = "$skills_src" ]; then
-    echo "skills symlink already OK"
-else
-    [ -e "$skills_dst" ] && mv "$skills_dst" "$skills_dst.backup-$ts"
-    ln -s "$skills_src" "$skills_dst"
-    echo "skills symlink created (old dir backed up if any)"
-fi
+# 1) Skills -> symlink to repo checkout, for every agent that supports the SKILL.md standard
+skills_src="$REPO/zcode/skills"
+for dst in "$HOME/.zcode/skills" "$HOME/.codex/skills" "$HOME/.claude/skills" "$HOME/.cursor/skills"; do
+    mkdir -p "$(dirname "$dst")"
+    if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$skills_src" ]; then
+        echo "skills symlink already OK: $dst"
+    else
+        [ -e "$dst" ] && mv "$dst" "$dst.backup-$ts"
+        ln -s "$skills_src" "$dst"
+        echo "skills symlink created: $dst"
+    fi
+done
 
-# 2) Unified AGENTS.md -> ~/.codex/AGENTS.md
-mkdir -p "$HOME/.codex"
-agents_dst="$HOME/.codex/AGENTS.md"
-[ -f "$agents_dst" ] && ! cmp -s "$agents_dst" "$REPO/global/AGENTS.md" && mv "$agents_dst" "$agents_dst.backup-$ts"
-cp "$REPO/global/AGENTS.md" "$agents_dst"
-echo "AGENTS.md deployed to ~/.codex"
+# 2) Unified global instructions -> each agent's global memory/instruction file
+agents_src="$REPO/global/AGENTS.md"
+for dst in "$HOME/.codex/AGENTS.md" "$HOME/.claude/CLAUDE.md" "$HOME/.gemini/GEMINI.md" "$HOME/.config/opencode/AGENTS.md"; do
+    mkdir -p "$(dirname "$dst")"
+    [ -f "$dst" ] && ! cmp -s "$dst" "$agents_src" && mv "$dst" "$dst.backup-$ts"
+    cp "$agents_src" "$dst"
+done
+echo "global instructions deployed (codex/claude/gemini/opencode)"
 
 # 3) ZCode memories: copy only missing project keys
 mkdir -p "$HOME/.zcode/cli/memories/projects"
@@ -55,4 +59,5 @@ echo
 echo "== Manual steps (secrets, NOT auto-applied) =="
 echo " 1. Merge zcode/cli.config.template.json into ~/.zcode/cli/config.json (fill \$GITHUB_MCP_PAT / \$BAIDU_PAN_MCP_TOKEN)"
 echo " 2. Save codex/config.toml.template as ~/.codex/config.toml (fill \$CODEX_BEARER_TOKEN)"
-echo " 3. Local MCP servers: see codex/mcp-servers-setup/README.md"
+echo " 3. MCP for other agents: ./setup-mcp.sh (see mcp/FORMATS.md)"
+echo " 4. Local MCP servers: see codex/mcp-servers-setup/README.md"
