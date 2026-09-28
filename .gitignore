@@ -12,3 +12,6 @@ Thumbs.db
 nul
 debug.log
 *.backup-*
+
+# nested independent repos (sync via own remotes, see projects/trusted-projects.md)
+projects/workspace-default/ai-coldstart/

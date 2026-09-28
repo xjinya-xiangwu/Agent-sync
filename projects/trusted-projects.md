@@ -19,3 +19,9 @@
 | `project-9771558ee6717806` | AI 安全测试平台（网关重构、题库 PRD，`E:\Zcode\安全相关`） |
 | `projects-891684439fcec49a` | Channel 视频管线（`E:/Zcode/Projects/Channel`）、Notion Workers |
 | `saas-e13207d640b5bdfb` | PhotoCurator 照片分类（pic-classifier / pic-classifier-local） |
+
+## 外部独立仓库（不入 Agent-sync，各自同步）
+
+| 本机路径 | GitHub 远端 |
+|---|---|
+| `~/.zcode/workspace/default/ai-coldstart` | https://github.com/xjinya-xiangwu/AI-cold-start（跨 agent skills 分发器 asp；新机器直接 clone 该仓库） |
