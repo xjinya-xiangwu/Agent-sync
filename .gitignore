@@ -1,5 +1,8 @@
 # secrets & runtime noise — never commit
 credentials.env
+credentials/*.dec
+credentials/*.dec.sha256
+credentials/local/
 mcp/generated/
 *.log
 *.sqlite

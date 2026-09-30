@@ -74,7 +74,7 @@
     "type": "sse",
     "url": "https://mcp-pan.baidu.com/sse",
     "headers": {
-     "Authorization": "Bearer ${BAIDU_PAN_MCP_TOKEN}_nIqKjdoW3J6Dyl9C8.KDd6KQ"
+     "Authorization": "Bearer ${BAIDU_PAN_MCP_TOKEN}"
     },
     "enabled": true
    }

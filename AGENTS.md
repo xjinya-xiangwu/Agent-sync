@@ -1,6 +1,12 @@
 # AGENTS.md — Agent-sync 仓库引导（任何 agent 在本仓库工作时必读）
 
-本仓库是**跨端、跨 agent 的工作环境同步仓库**（ZCode / Codex / Claude Code / Cursor / OpenCode / Gemini CLI / Kimi CLI / DSH 等通用）。你（agent）在新机器上被要求"恢复/同步工作环境"时，按本文件执行。
+本仓库是 **SIAE（Self-Improving Agent Environment，github.com/xjinya-xiangwu/SIAE）的 L3b 跨端同步底座**（决策 D14），同时服务**跨端、跨 agent 的工作环境同步**（ZCode / Codex / Claude Code / Cursor / OpenCode / Gemini CLI / Kimi CLI / DSH / WorkBuddy 等通用）。你（agent）在新机器上被要求"恢复/同步工作环境"时，按本文件执行。
+
+**SIAE 语境下的职责**（顶层设计单一事实源：AIHOT fork `planning/sync-plane-design.md`）：
+
+1. **跨端凭证加密同步**：凭证只以 age 加密形态存在于 `credentials/*.enc`；解密只发生在设备端本地配置，**明文永不入库、永不进对话、永不进日志**。agent 只执行"解密→填充→校验"，不回显任何值。
+2. **MCP 能力快速拉齐**：`mcp/mcp-servers.json` 是 SIAE 全项目 MCP 的 canonical 注册表（唯一事实源）；`mcp/FORMATS.md` 是翻译规则。与 asp（AI-cold-start）的契约：**asp 写结构（服务器条目，token 留占位符），本仓库填值（解密后填充占位符）**——字段级互斥，都不覆盖对方写入。
+3. **既有同步职能**：skills / 全局指令 / memory / workspace（workspace 同步范围须过 SIAE §4.0 数据边界：工作层 W 可同步，私人层 P 禁止）。
 
 ## 仓库是什么
 
@@ -26,7 +32,7 @@
 
 ## 硬性规则
 
-- **密钥永不入库**：任何真实 token/PAT/secret 不得写入本仓库任何文件、commit 信息或 agent 输出。模板里只允许 `${PLACEHOLDER}` 占位。
+- **密钥永不入库、永不进对话**：任何真实 token/PAT/secret（含**任何片段**）不得写入本仓库任何文件、commit 信息或 agent 输出。模板里只允许完整 `${PLACEHOLDER}` 占位——禁止为"方便对照"内嵌真实片段（2026-09-30 事件教训，见 sync-plane-design §8）。凭证跨端一律走 `credentials/*.enc`（age 加密，M-S2）。
 - **不覆盖原则**：memory 与 workspace 文件只增不覆盖（本机已有的可能比仓库新）；config 模板需用户确认后再合并。
 - **幂等**：所有安装/同步操作必须可重复执行不产生副作用。
 - 明确**不同步**：会话原始记录（sessions/rollout 原文）、插件缓存、`~/.zcode/v2/` 凭证。
